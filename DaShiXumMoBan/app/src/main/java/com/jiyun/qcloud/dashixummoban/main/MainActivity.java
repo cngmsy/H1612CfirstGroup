@@ -16,6 +16,8 @@ import com.jiyun.qcloud.dashixummoban.manager.ActivityCollector;
 import com.jiyun.qcloud.dashixummoban.manager.FragmentMager;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomeFragment;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomePresenter;
+import com.jiyun.qcloud.dashixummoban.ui.order.OrderFragment;
+import com.jiyun.qcloud.dashixummoban.ui.order.OrderPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fragmentManager;
     private long mExitTime;
     private String address;
+
     @Override
     protected void initData() {
         address = getIntent().getStringExtra("address");
@@ -55,6 +58,7 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
 
     }
+
     public String send() {
         if (address != null) {
             return address;
@@ -62,6 +66,7 @@ public class MainActivity extends BaseActivity {
             return null;
         }
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -74,6 +79,8 @@ public class MainActivity extends BaseActivity {
                 FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
                 break;
             case R.id.but2:
+                OrderFragment orderFragment= (OrderFragment) FragmentMager.getInstance().start(R.id.fragment, OrderFragment.class, false).build();
+                new OrderPresenter(orderFragment);
                 break;
             case R.id.but4:
                 break;

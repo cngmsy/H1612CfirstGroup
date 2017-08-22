@@ -37,7 +37,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /*
  * Created by 82年的笔记本 on 2017/8/21.
@@ -55,7 +54,6 @@ public class HomeFragment extends BaseFragment implements XRecyclerView.LoadingL
     boolean valid = true;
     @BindView(R.id.address)
     TextView address;
-    Unbinder unbinder;
     private List<String> list = new ArrayList<>();
     private List<HomeBean.BodyBean.SellerBean> listview_list = new ArrayList<>();
     private RollAdapter rollAdapter;

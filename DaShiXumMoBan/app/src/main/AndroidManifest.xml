@@ -30,6 +30,7 @@
         </activity>
 
         <activity android:name=".activity.MapActivity"/>
+        <activity android:name=".activity.OrderActivity"/>
         //屏幕适配
         <meta-data
             android:name="design_width"
