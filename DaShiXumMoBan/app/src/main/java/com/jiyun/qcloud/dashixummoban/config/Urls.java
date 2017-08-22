@@ -6,8 +6,7 @@ package com.jiyun.qcloud.dashixummoban.config;
  */
 
 public class Urls {
+    public static final String Order="http://123.206.14.104:8080/TakeoutService/order?userId=3626";
 
     public static final String HOME="http://123.206.14.104:8080/takeout/home?latitude=116.30142&longitude=40.05087";
-
-    public static final String ORDER="http://123.206.14.104:8080/TakeoutService/order?userId=3626";
 }

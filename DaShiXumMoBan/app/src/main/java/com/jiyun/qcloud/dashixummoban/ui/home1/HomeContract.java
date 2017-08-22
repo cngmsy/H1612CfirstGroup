@@ -9,13 +9,12 @@ import com.jiyun.qcloud.dashixummoban.base.IBaseView;
  */
 
 public class HomeContract {
-    interface View extends IBaseView<Presenter> {
+    public interface View extends IBaseView<Presenter> {
         void showHomeListData(BaseBean baseBean);
         void playVideo();
         void loadWebView();
-
     }
 
-    interface Presenter extends IBasePresenter {
+    public interface Presenter extends IBasePresenter {
     }
 }
