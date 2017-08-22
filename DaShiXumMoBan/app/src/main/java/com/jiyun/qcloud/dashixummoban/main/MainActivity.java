@@ -41,9 +41,10 @@ public class MainActivity extends BaseActivity {
     RadioGroup linear;
     private FragmentManager fragmentManager;
     private long mExitTime;
-
+    private String address;
     @Override
     protected void initData() {
+        address = getIntent().getStringExtra("address");
         fragmentManager = App.mBaseActivity.getSupportFragmentManager();
         HomeFragment homeFragment = (HomeFragment) FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
         new HomePresenter(homeFragment);
@@ -54,7 +55,13 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
 
     }
-
+    public String send() {
+        if (address != null) {
+            return address;
+        } else {
+            return null;
+        }
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
