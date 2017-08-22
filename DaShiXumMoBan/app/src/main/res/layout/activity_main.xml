@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"></FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5px"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/but1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:drawableTop="@drawable/image1"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@drawable/text" />
+
+        <RadioButton
+            android:id="@+id/but2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:drawableTop="@drawable/image2"
+            android:gravity="center"
+            android:text="订单"
+            android:textColor="@drawable/text" />
+
+        <RadioButton
+            android:id="@+id/but4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:drawableTop="@drawable/image3"
+            android:gravity="center"
+            android:text="个人"
+            android:textColor="@drawable/text" />
+
+        <RadioButton
+            android:id="@+id/but5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:drawableTop="@drawable/image4"
+            android:gravity="center"
+            android:text="更多"
+            android:textColor="@drawable/text" />
+
+    </RadioGroup>
+
+
+</LinearLayout>
