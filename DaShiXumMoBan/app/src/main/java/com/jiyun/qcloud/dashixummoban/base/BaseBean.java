@@ -29,4 +29,12 @@ public class BaseBean {
     public void setData(String data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "BaseBean{" +
+                "code='" + code + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

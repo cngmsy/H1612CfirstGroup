@@ -16,7 +16,6 @@ import com.jiyun.qcloud.dashixummoban.manager.ActivityCollector;
 import com.jiyun.qcloud.dashixummoban.manager.FragmentMager;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomeFragment;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomePresenter;
-import com.jiyun.qcloud.dashixummoban.ui.person.PersonFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,9 +41,10 @@ public class MainActivity extends BaseActivity {
     RadioGroup linear;
     private FragmentManager fragmentManager;
     private long mExitTime;
-
+    private String address;
     @Override
     protected void initData() {
+        address = getIntent().getStringExtra("address");
         fragmentManager = App.mBaseActivity.getSupportFragmentManager();
         HomeFragment homeFragment = (HomeFragment) FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
         new HomePresenter(homeFragment);
@@ -55,7 +55,13 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
 
     }
-
+    public String send() {
+        if (address != null) {
+            return address;
+        } else {
+            return null;
+        }
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -70,7 +76,6 @@ public class MainActivity extends BaseActivity {
             case R.id.but2:
                 break;
             case R.id.but4:
-                FragmentMager.getInstance().start(R.id.fragment, PersonFragment.class,false).build();
                 break;
             case R.id.but5:
                 break;

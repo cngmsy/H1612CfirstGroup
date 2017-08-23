@@ -13,6 +13,7 @@ public class HomeContract {
         void showHomeListData(BaseBean baseBean);
         void playVideo();
         void loadWebView();
+
     }
 
     public interface Presenter extends IBasePresenter {

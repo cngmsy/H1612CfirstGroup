@@ -1,6 +1,7 @@
 package com.jiyun.qcloud.dashixummoban.manager;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.jiyun.qcloud.dashixummoban.app.App;
@@ -17,7 +18,7 @@ public class FragmentMager {
     private BaseFragment fragment;
     private String simpleName;
     private FragmentTransaction fragmentTransaction;
-
+    private Fragment singleFragment;
 
 
     public FragmentMager() {
@@ -40,13 +41,31 @@ public class FragmentMager {
         return this;
     }
 
+    public  BaseFragment getSingleFragment(Class<? extends BaseFragment> fragmentClass) {
+        getFragmentManagers();
+        simpleName = fragmentClass.getSimpleName();
+        BaseFragment singleFragment = (BaseFragment) fragmentManager.findFragmentByTag(simpleName);
+        if (fragment == null) {
+            try {
+                //java动态代理
+                singleFragment  = fragmentClass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return singleFragment ;
+
+    }
+
     /**
      * @param containID     容器的id
      * @param fragmentClass fragment的实例化对象
      * @return 当前类对象, 方便使用构建者模式
      * @nest    是否是Fragment嵌套(Fragment和Fragment嵌套)
      */
-
     public FragmentMager start(int containID, Class<? extends BaseFragment> fragmentClass,Boolean nest) {
 
         getFragmentManagers();
