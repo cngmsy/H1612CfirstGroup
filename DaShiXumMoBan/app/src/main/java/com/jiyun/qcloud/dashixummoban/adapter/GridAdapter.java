@@ -47,8 +47,8 @@ public class GridAdapter extends BaseAdapter {
         if (view == null) {
             view = View.inflate(App.mBaseActivity, R.layout.grid_item, null);
             myHolder = new MyHolder();
-            myHolder.textView = view.findViewById(R.id.text);
-            myHolder.imageView=view.findViewById(R.id.image);
+            myHolder.textView = (TextView) view.findViewById(R.id.text);
+            myHolder.imageView= (ImageView) view.findViewById(R.id.image);
             view.setTag(myHolder);
         } else {
             view.getTag();

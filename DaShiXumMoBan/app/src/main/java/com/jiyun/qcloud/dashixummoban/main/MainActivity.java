@@ -1,5 +1,8 @@
 package com.jiyun.qcloud.dashixummoban.main;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,9 +19,22 @@ import com.jiyun.qcloud.dashixummoban.manager.ActivityCollector;
 import com.jiyun.qcloud.dashixummoban.manager.FragmentMager;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomeFragment;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomePresenter;
+import com.jiyun.qcloud.dashixummoban.ui.more.MoreFragment;
+import com.jiyun.qcloud.dashixummoban.ui.more.MorePresent;
+import com.jiyun.qcloud.dashixummoban.ui.more.yy.Upadata;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Created by chj on 2017/8/20.
@@ -42,18 +58,51 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fragmentManager;
     private long mExitTime;
     private String address;
+    private Upadata mUpdateManger;
+
     @Override
     protected void initData() {
+
         address = getIntent().getStringExtra("address");
         fragmentManager = App.mBaseActivity.getSupportFragmentManager();
         HomeFragment homeFragment = (HomeFragment) FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
         new HomePresenter(homeFragment);
         but1.setChecked(true);
     }
-
     @Override
     protected void initView() {
-
+        mUpdateManger = new Upadata(this);
+        mUpdateManger.checkUpdateInfo();
+        HashMap<String, String> map = new HashMap<>();
+        PackageManager manager = this.getPackageManager();
+        PackageInfo info = null;
+        try {
+            info = manager.getPackageInfo(this.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String version = info.versionName;
+        map.put("file", version + "");
+        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        mbody.addFormDataPart("image", version, RequestBody.create(null, version));
+        RequestBody requestBody = mbody.build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("http://123.206.14.104:8080/FileUploadDemo/FileUploadServlet")
+                .post(requestBody)
+                .build();
+    }
+    public File saveBitmapFile(Bitmap bitmap) {
+        File file = new File("/sdcard/01.apk");//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
     public String send() {
         if (address != null) {
@@ -62,6 +111,7 @@ public class MainActivity extends BaseActivity {
             return null;
         }
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -78,6 +128,8 @@ public class MainActivity extends BaseActivity {
             case R.id.but4:
                 break;
             case R.id.but5:
+                MoreFragment  fragment = (MoreFragment) FragmentMager.getInstance().start(R.id.fragment, MoreFragment.class, false).build();
+                new MorePresent(fragment);
                 break;
             case R.id.linear:
                 break;
