@@ -16,16 +16,14 @@ import com.jiyun.qcloud.dashixummoban.entity.Data;
 import com.jiyun.qcloud.dashixummoban.entity.Head;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 /**
  * Created by admin on 2017/8/19.
  */
 
-public class DataStickyListAdapter extends BaseAdapter implements StickyListHeadersAdapter {
+public class DataStickyListAdapter extends BaseAdapter {
     private Context context;
     private List<Head> headList;
     private List<Data> dataList;
@@ -116,7 +114,7 @@ public class DataStickyListAdapter extends BaseAdapter implements StickyListHead
         private TextView title,content,sell,newPrice,oldPrice,count;
     }
 
-    @Override
+
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
         Data data = dataList.get(position);
         //把头(右侧标签)所在的下标与左侧相互关联
@@ -130,7 +128,7 @@ public class DataStickyListAdapter extends BaseAdapter implements StickyListHead
         return tv;
     }
 
-    @Override
+
     public long getHeaderId(int position) {
         int headId = dataList.get(position).getHeadId();
         return headId;
