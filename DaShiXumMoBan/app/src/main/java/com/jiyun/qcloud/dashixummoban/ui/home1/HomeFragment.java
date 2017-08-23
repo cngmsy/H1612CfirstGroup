@@ -84,12 +84,12 @@ public class HomeFragment extends BaseFragment implements XRecyclerView.LoadingL
         mListview.setAdapter(home_listAdapter);
         View inflate = View.inflate(App.mBaseActivity, R.layout.home_head, null);
         linearLayout.getBackground().setAlpha(0);
-        gridView = (GridView) inflate.findViewById(R.id.grid);
+        gridView = inflate.findViewById(R.id.grid);
         grids = new ArrayList<>();
         gridAdapter = new GridAdapter(grids);
         gridView.setAdapter(gridAdapter);
         gridView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        rollPagerView = (RollPagerView) inflate.findViewById(R.id.roll);
+        rollPagerView = inflate.findViewById(R.id.roll);
         rollAdapter = new RollAdapter(list);
         rollPagerView.setPlayDelay(2000);
         rollPagerView.setAnimationDurtion(500);

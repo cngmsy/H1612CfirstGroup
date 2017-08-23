@@ -24,6 +24,4 @@ public class Urls {
     public static final String EMAILREGISTER = "https://reg.cntv.cn/api/register.action";
 
     public static final String HOME="http://123.206.14.104:8080/takeout/home?latitude=116.30142&longitude=40.05087";
-
-    public static final String MORE="https://ticket-api-m.mtime.cn/discovery/trailerList.api";
 }

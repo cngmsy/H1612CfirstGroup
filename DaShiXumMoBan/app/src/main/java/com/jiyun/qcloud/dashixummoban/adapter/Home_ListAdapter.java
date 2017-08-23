@@ -44,7 +44,7 @@ public class Home_ListAdapter extends BaseAdapter {
         if (view==null){
             view = View.inflate(App.mBaseActivity, R.layout.home_list_item, null);
             myHolder = new MyHolder();
-             myHolder.name= (TextView) view.findViewById(R.id.title);
+             myHolder.name= view.findViewById(R.id.title);
             view.setTag(myHolder);
         }else {
             view.getTag();
