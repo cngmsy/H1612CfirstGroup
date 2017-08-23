@@ -1,9 +1,15 @@
 package com.jiyun.qcloud.dashixummoban.ui.home1;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jiyun.qcloud.dashixummoban.base.BaseBean;
+import com.jiyun.qcloud.dashixummoban.entity.ShopEntity;
 import com.jiyun.qcloud.dashixummoban.modle.dataModel.IHomeModel;
 import com.jiyun.qcloud.dashixummoban.modle.dataModel.IHomeModelImpl;
 import com.jiyun.qcloud.dashixummoban.modle.net.callback.NetWorkCallBack;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Created by 82年的笔记本 on 2017/8/21.
@@ -41,4 +47,5 @@ public class HomePresenter implements HomeContract.Presenter {
             }
         });
     }
+
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jiyun.qcloud.dashixummoban.R;
 import com.jiyun.qcloud.dashixummoban.activity.MapActivity;
+import com.jiyun.qcloud.dashixummoban.activity.ShoppingActivity;
 import com.jiyun.qcloud.dashixummoban.adapter.GridAdapter;
 import com.jiyun.qcloud.dashixummoban.adapter.Home_ListAdapter;
 import com.jiyun.qcloud.dashixummoban.adapter.RollAdapter;
@@ -43,7 +45,7 @@ import butterknife.Unbinder;
  * Created by 82年的笔记本 on 2017/8/21.
  */
 
-public class HomeFragment extends BaseFragment implements XRecyclerView.LoadingListener, HomeContract.View, AbsListView.OnScrollListener {
+public class HomeFragment extends BaseFragment implements XRecyclerView.LoadingListener, HomeContract.View, AbsListView.OnScrollListener,AdapterView.OnItemClickListener {
     @BindView(R.id.s_imag)
     ImageView sImag;
     @BindView(R.id.s_look)
@@ -161,6 +163,8 @@ public class HomeFragment extends BaseFragment implements XRecyclerView.LoadingL
         gridAdapter.notifyDataSetChanged();
         home_listAdapter.notifyDataSetChanged();
         rollAdapter.notifyDataSetChanged();
+
+        mListview.setOnItemClickListener(this);
     }
 
     @Override
@@ -271,6 +275,11 @@ public class HomeFragment extends BaseFragment implements XRecyclerView.LoadingL
     @OnClick(R.id.address)
     public void onViewClicked() {
         startActivity(new Intent(App.mBaseActivity, MapActivity.class));
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        startActivity(new Intent(getActivity(), ShoppingActivity.class));
     }
 
     class ItemRecod {
