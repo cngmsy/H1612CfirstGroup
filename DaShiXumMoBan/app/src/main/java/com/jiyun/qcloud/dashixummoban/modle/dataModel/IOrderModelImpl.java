@@ -1,7 +1,6 @@
 package com.jiyun.qcloud.dashixummoban.modle.dataModel;
 
 import com.jiyun.qcloud.dashixummoban.base.BaseBean;
-import com.jiyun.qcloud.dashixummoban.config.Urls;
 import com.jiyun.qcloud.dashixummoban.modle.net.callback.NetWorkCallBack;
 
 /**
@@ -11,6 +10,6 @@ import com.jiyun.qcloud.dashixummoban.modle.net.callback.NetWorkCallBack;
 public class IOrderModelImpl implements IHomeModel {
     @Override
     public void loadHomeList(NetWorkCallBack<BaseBean> callback) {
-        iHttp.get(Urls.ORDER,null,callback);
+       // iHttp.get(Urls.ORDER,null,callback);
     }
 }

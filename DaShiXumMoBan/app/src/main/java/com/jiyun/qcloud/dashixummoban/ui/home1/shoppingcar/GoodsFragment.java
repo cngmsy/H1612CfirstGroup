@@ -4,14 +4,9 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -19,14 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allenliu.badgeview.BadgeFactory;
-import com.allenliu.badgeview.BadgeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jiyun.qcloud.dashixummoban.R;
-import com.jiyun.qcloud.dashixummoban.activity.CheckoutActivity;
 import com.jiyun.qcloud.dashixummoban.adapter.DataStickyListAdapter;
 import com.jiyun.qcloud.dashixummoban.adapter.HeadListAdapter;
 import com.jiyun.qcloud.dashixummoban.app.App;
@@ -34,7 +25,6 @@ import com.jiyun.qcloud.dashixummoban.base.BaseBean;
 import com.jiyun.qcloud.dashixummoban.base.BaseFragment;
 import com.jiyun.qcloud.dashixummoban.entity.Data;
 import com.jiyun.qcloud.dashixummoban.entity.Head;
-import com.jiyun.qcloud.dashixummoban.ui.views.CarImageView;
 import com.jiyun.qcloud.dashixummoban.utils.ParcelableMap;
 
 import java.util.ArrayList;
@@ -44,13 +34,15 @@ import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+<<<<<<< HEAD
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import static android.R.attr.animation;
 import static android.R.attr.data;
+=======
+>>>>>>> a80aa14655dabc34dbbea24398ecf95ad7fbb1a6
 
 /**
  * Created by admin on 2017/8/22.
@@ -59,9 +51,9 @@ import static android.R.attr.data;
 public class GoodsFragment extends BaseFragment implements GoodsContract.View, AdapterView.OnItemClickListener, Animator.AnimatorListener, AbsListView.OnScrollListener, XRecyclerView.LoadingListener, DataStickyListAdapter.onSubNum, DataStickyListAdapter.OnAddNum {
     @BindView(R.id.lv_goods_left)
     ListView lvGoodsLeft;
-    @BindView(R.id.shlv_goods_right)
-    StickyListHeadersListView shlvGoodsRight;
-    @BindView(R.id.iv_car)
+    //@BindView(R.id.shlv_goods_right)
+    //StickyListHeadersListView shlvGoodsRight;
+   // @BindView(R.id.iv_car)
     ImageView ivCar;
     Unbinder unbinder;
     @BindView(R.id.rl_father)
@@ -75,7 +67,7 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
     private Map<Data, Integer> map = new HashMap();
     private int num = 0;
     private boolean isScroll = false;
-    private BadgeView bind;
+   // private BadgeView bind;
 
     @Override
     protected int getLayoutRes() {
@@ -112,9 +104,9 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
 
         stickyListAdapter = new DataStickyListAdapter(App.mBaseActivity, headList, dataList);
 
-        shlvGoodsRight.setAdapter(stickyListAdapter);
+        //shlvGoodsRight.setAdapter(stickyListAdapter);
         lvGoodsLeft.setOnItemClickListener(GoodsFragment.this);
-        shlvGoodsRight.setOnScrollListener(GoodsFragment.this);
+        //shlvGoodsRight.setOnScrollListener(GoodsFragment.this);
 
         stickyListAdapter.setOnAddNum(this);
         stickyListAdapter.setOnSubNum(this);
@@ -215,7 +207,7 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
         headListAdapter.setSelectedPosition(i);
         //通过添加数据时右侧添加的
         Head head = headList.get(i);
-        shlvGoodsRight.setSelection(head.getGroupFirstIndex());
+       // shlvGoodsRight.setSelection(head.getGroupFirstIndex());
         isScroll = false;
     }
 

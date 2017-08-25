@@ -44,8 +44,8 @@ public class OrderAdapter extends BaseAdapter {
         if (view == null) {
             view = View.inflate(App.mBaseActivity, R.layout.order_shop, null);
             holder = new MyHolder();
-            holder.o_image = view.findViewById(R.id.o_image);
-            holder.o_title = view.findViewById(R.id.o_title);
+            holder.o_image = (ImageView) view.findViewById(R.id.o_image);
+            holder.o_title = (TextView) view.findViewById(R.id.o_title);
             view.setTag(holder);
         } else {
             holder = (MyHolder) view.getTag();
