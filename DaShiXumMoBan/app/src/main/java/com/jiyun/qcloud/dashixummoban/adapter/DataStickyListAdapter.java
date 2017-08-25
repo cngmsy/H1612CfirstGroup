@@ -31,16 +31,22 @@ public class DataStickyListAdapter extends BaseAdapter implements StickyListHead
     private List<Data> dataList;
 
     //第一步，设置接口，这里方便在外面的activity或者fragment进行回调
-    private View.OnClickListener onAddNum;
-    private View.OnClickListener onSubNum;
+    private OnAddNum onAddNum;
+    private onSubNum onSubNum;
     //第二步，设置接口方法
-    public void setOnAddNum(View.OnClickListener onAddNum){
+    public void setOnAddNum(OnAddNum onAddNum){
         this.onAddNum = onAddNum;
     }
-    public void setOnSubNum(View.OnClickListener onSubNum){
+    public void setOnSubNum(onSubNum onSubNum){
         this.onSubNum = onSubNum;
     }
 
+    public interface OnAddNum{
+        void click(View v,int position,ImageView remove,TextView connt);
+    }
+    public interface onSubNum{
+        void click(View v,int position,ImageView remove,TextView connt);
+    }
     public DataStickyListAdapter(Context context, List<Head> headList, List<Data> dataList) {
         this.context = context;
         this.headList = headList;
@@ -70,9 +76,19 @@ public class DataStickyListAdapter extends BaseAdapter implements StickyListHead
             convertView = View.inflate(context, R.layout.item_listright, null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.iv_goods_show);
             holder.add = (ImageView) convertView.findViewById(R.id.iv_goods_add);
-            holder.add.setOnClickListener(onAddNum);
+            holder.add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onAddNum.click(view,position,holder.remove,holder.count);
+                }
+            });
             holder.remove = (ImageView) convertView.findViewById(R.id.iv_goods_remove);
-            holder.remove.setOnClickListener(onSubNum);
+            holder.remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onSubNum.click(view,position,holder.remove,holder.count);
+                }
+            });
             holder.title = (TextView) convertView.findViewById(R.id.tv_goods_name);
             holder.content = (TextView) convertView.findViewById(R.id.tv_goods_content);
             holder.sell = (TextView) convertView.findViewById(R.id.tv_goods_sell);
