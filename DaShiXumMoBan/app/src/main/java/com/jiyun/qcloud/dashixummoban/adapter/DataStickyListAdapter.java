@@ -18,31 +18,26 @@ import com.jiyun.qcloud.dashixummoban.entity.Head;
 import java.math.BigDecimal;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 
 /**
  * Created by admin on 2017/8/19.
  */
 
-public class DataStickyListAdapter extends BaseAdapter {
+public class DataStickyListAdapter extends BaseAdapter implements StickyListHeadersAdapter{
     private Context context;
     private List<Head> headList;
     private List<Data> dataList;
 
     //第一步，设置接口，这里方便在外面的activity或者fragment进行回调
     private OnAddNum onAddNum;
-    private onSubNum onSubNum;
     //第二步，设置接口方法
     public void setOnAddNum(OnAddNum onAddNum){
         this.onAddNum = onAddNum;
     }
-    public void setOnSubNum(onSubNum onSubNum){
-        this.onSubNum = onSubNum;
-    }
 
     public interface OnAddNum{
-        void click(View v,int position,ImageView remove,TextView connt);
-    }
-    public interface onSubNum{
         void click(View v,int position,ImageView remove,TextView connt);
     }
     public DataStickyListAdapter(Context context, List<Head> headList, List<Data> dataList) {
@@ -74,19 +69,7 @@ public class DataStickyListAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.item_listright, null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.iv_goods_show);
             holder.add = (ImageView) convertView.findViewById(R.id.iv_goods_add);
-            holder.add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onAddNum.click(view,position,holder.remove,holder.count);
-                }
-            });
             holder.remove = (ImageView) convertView.findViewById(R.id.iv_goods_remove);
-            holder.remove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onSubNum.click(view,position,holder.remove,holder.count);
-                }
-            });
             holder.title = (TextView) convertView.findViewById(R.id.tv_goods_name);
             holder.content = (TextView) convertView.findViewById(R.id.tv_goods_content);
             holder.sell = (TextView) convertView.findViewById(R.id.tv_goods_sell);
@@ -105,6 +88,15 @@ public class DataStickyListAdapter extends BaseAdapter {
         } else {
             holder.content.setVisibility(View.GONE);
         }
+
+        if (dataList.get(position).getCount()!= 0) {
+            holder.count.setVisibility(View.VISIBLE);
+            holder.remove.setVisibility(View.VISIBLE);
+            holder.count.setText(dataList.get(position).getCount()+"");
+        }else {
+            holder.count.setVisibility(View.INVISIBLE);
+            holder.remove.setVisibility(View.INVISIBLE);
+        }
         holder.sell.setText("月销售" + dataList.get(position).getSells() + "份");
         double newPrice = dataList.get(position).getNewPrice();
         BigDecimal bigDecimal = new BigDecimal(newPrice);
@@ -120,6 +112,20 @@ public class DataStickyListAdapter extends BaseAdapter {
             holder.oldPrice.setVisibility(View.GONE);
         }
         Glide.with(context).load(dataList.get(position).getPic()).into(holder.imageView);
+        holder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddNum.click(view,position,holder.remove,holder.count);
+              //  notifyDataSetChanged();
+            }
+        });
+        holder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddNum.click(view,position,holder.remove,holder.count);
+               // notifyDataSetChanged();
+            }
+        });
         holder.add.setTag(position);
         holder.remove.setTag(position);
         return convertView;

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:layout_margin="50dp">
+    <TextView
+        android:text="选择标签"
+        android:textSize="22sp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RadioGroup
+        android:id="@+id/rg_popup"
+        android:layout_marginLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4">
+        <RadioButton
+            android:button="@null"
+            android:id="@+id/wu"
+            android:text="无"
+            android:padding="7dp"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <RadioButton
+            android:button="@null"
+            android:id="@+id/home"
+            android:text="家"
+            android:padding="7dp"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <RadioButton
+            android:button="@null"
+            android:id="@+id/company"
+            android:text="公司"
+            android:padding="7dp"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <RadioButton
+            android:button="@null"
+            android:id="@+id/shcoll"
+            android:text="学校"
+            android:padding="7dp"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+</LinearLayout>

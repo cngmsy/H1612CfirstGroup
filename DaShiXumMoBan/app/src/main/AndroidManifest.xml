@@ -28,6 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.InsertAddressActivity"/>
+        <activity android:name=".activity.InfoActivity"/>
         <activity android:name=".activity.MapActivity" />
         //屏幕适配
         <meta-data

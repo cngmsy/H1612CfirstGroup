@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,10 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allenliu.badgeview.BadgeFactory;
+import com.allenliu.badgeview.BadgeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jiyun.qcloud.dashixummoban.R;
+import com.jiyun.qcloud.dashixummoban.activity.CheckoutActivity;
 import com.jiyun.qcloud.dashixummoban.adapter.DataStickyListAdapter;
 import com.jiyun.qcloud.dashixummoban.adapter.HeadListAdapter;
 import com.jiyun.qcloud.dashixummoban.app.App;
@@ -25,6 +32,7 @@ import com.jiyun.qcloud.dashixummoban.base.BaseBean;
 import com.jiyun.qcloud.dashixummoban.base.BaseFragment;
 import com.jiyun.qcloud.dashixummoban.entity.Data;
 import com.jiyun.qcloud.dashixummoban.entity.Head;
+import com.jiyun.qcloud.dashixummoban.ui.views.CarImageView;
 import com.jiyun.qcloud.dashixummoban.utils.ParcelableMap;
 
 import java.util.ArrayList;
@@ -36,24 +44,24 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-<<<<<<< HEAD
+
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import static android.R.attr.animation;
 import static android.R.attr.data;
-=======
->>>>>>> a80aa14655dabc34dbbea24398ecf95ad7fbb1a6
+import static android.R.attr.tag;
+
 
 /**
  * Created by admin on 2017/8/22.
  */
 
-public class GoodsFragment extends BaseFragment implements GoodsContract.View, AdapterView.OnItemClickListener, Animator.AnimatorListener, AbsListView.OnScrollListener, XRecyclerView.LoadingListener, DataStickyListAdapter.onSubNum, DataStickyListAdapter.OnAddNum {
+public class GoodsFragment extends BaseFragment implements GoodsContract.View, AdapterView.OnItemClickListener, Animator.AnimatorListener, AbsListView.OnScrollListener, XRecyclerView.LoadingListener, DataStickyListAdapter.OnAddNum {
     @BindView(R.id.lv_goods_left)
     ListView lvGoodsLeft;
-    //@BindView(R.id.shlv_goods_right)
-    //StickyListHeadersListView shlvGoodsRight;
-   // @BindView(R.id.iv_car)
+    @BindView(R.id.shlv_goods_right)
+    StickyListHeadersListView shlvGoodsRight;
+    @BindView(R.id.iv_car)
     ImageView ivCar;
     Unbinder unbinder;
     @BindView(R.id.rl_father)
@@ -65,9 +73,10 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
     private DataStickyListAdapter stickyListAdapter;
     private Intent intent;
     private Map<Data, Integer> map = new HashMap();
-    private int num = 0;
+    private int allCount = 0;
     private boolean isScroll = false;
-   // private BadgeView bind;
+    private BadgeView bind;
+    private int count;
 
     @Override
     protected int getLayoutRes() {
@@ -99,17 +108,18 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
         this.headList = headList;
         this.dataList = dataList;
 
+        Log.e("TAG", headList.size() + "adfsdfsdafs" + dataList.size());
+
         headListAdapter = new HeadListAdapter(App.mBaseActivity, headList);
         lvGoodsLeft.setAdapter(headListAdapter);
 
         stickyListAdapter = new DataStickyListAdapter(App.mBaseActivity, headList, dataList);
 
-        //shlvGoodsRight.setAdapter(stickyListAdapter);
+        shlvGoodsRight.setAdapter(stickyListAdapter);
         lvGoodsLeft.setOnItemClickListener(GoodsFragment.this);
-        //shlvGoodsRight.setOnScrollListener(GoodsFragment.this);
+        shlvGoodsRight.setOnScrollListener(GoodsFragment.this);
 
         stickyListAdapter.setOnAddNum(this);
-        stickyListAdapter.setOnSubNum(this);
     }
 
     @Override
@@ -139,7 +149,7 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
 
     @OnClick(R.id.iv_car)
     public void onClick() {
-        if (null != map && map.size() > 1) {
+        if (null != map && map.size() > 0) {
             ParcelableMap parcelableMap = new ParcelableMap();
             parcelableMap.setMap(map);
             intent.putExtra("map", parcelableMap);
@@ -149,65 +159,13 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
         }
     }
 
-//    @Override
-//    public void click(View v, int position, final ImageView remove, final TextView count) {
-//        intent = new Intent(getActivity(), CheckoutActivity.class);
-//        Data data1 = dataList.get(position);
-//        Integer beanCount = map.get(data1);
-//        if (beanCount == null) {
-//            map.put(data1, 1);
-//        } else {
-//            beanCount++;
-//            map.put(data1, beanCount);
-//        }
-//        for (int i = 0; i < headList.size(); i++) {
-//            String s = count.getText().toString();
-//            if (s.isEmpty()) {
-//                count.setText(1 + "");
-//            } else {
-//                int j = Integer.parseInt(s);
-//                j++;
-//                count.setText(j + "");
-//            }
-//        }
-//        num++;
-//        bind = BadgeFactory.create(getContext())
-//                .setTextColor(Color.WHITE)
-//                .setWidthAndHeight(25, 25)
-//                .setBadgeBackground(Color.RED)
-//                .setTextSize(10)
-//                .setBadgeGravity(Gravity.LEFT)
-//                .setBadgeCount(num)
-//                .setShape(BadgeView.SHAPE_CIRCLE)
-//                .bind(ivCar);
-//
-//        remove.setVisibility(View.VISIBLE);
-//        count.setVisibility(View.VISIBLE);
-//
-//        remove.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                num--;
-//                if (num <=  0) {
-//                    num = 0;
-//                    bind.setVisibility(View.INVISIBLE);
-//                    remove.setVisibility(View.GONE);
-//                    count.setVisibility(View.GONE);
-//                } else {
-//                    count.setText(num + "");
-//                    bind.setBadgeCount(num);
-//                }
-//            }
-//        });
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //左边条目被点击了
         headListAdapter.setSelectedPosition(i);
         //通过添加数据时右侧添加的
         Head head = headList.get(i);
-       // shlvGoodsRight.setSelection(head.getGroupFirstIndex());
+        shlvGoodsRight.setSelection(head.getGroupFirstIndex());
         isScroll = false;
     }
 
@@ -284,7 +242,7 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
 
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-//左边点击  导致右边滚动 只触发这个方法
+        //左边点击  导致右边滚动 只触发这个方法
         if (isScroll) {
             Data data = dataList.get(i);
             //当前正在置顶显示的头
@@ -312,70 +270,77 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View, A
 
     @Override
     public void click(View v, int position, ImageView remove, TextView connt) {
+
         Object tag = v.getTag();
         int key = v.getId();
         switch (key) {
             case R.id.iv_goods_add: //点击添加数量按钮，执行相应的处理
                 setBeiSai(v);
+                allCount++;
+                intent = new Intent(getActivity(), CheckoutActivity.class);
+                Data data = dataList.get(position);
+                Integer beanCount = map.get(data);
+                if (beanCount == null) {
+                    map.put(data, 1);
+                } else {
+                    beanCount++;
+                    map.put(data, beanCount);
+                }
+                bind = BadgeFactory.create(getContext())
+                        .setTextColor(Color.WHITE)
+                        .setWidthAndHeight(25, 25)
+                        .setBadgeBackground(Color.RED)
+                        .setTextSize(10)
+                        .setBadgeGravity(Gravity.LEFT)
+                        .setBadgeCount(allCount)
+                        .setShape(BadgeView.SHAPE_CIRCLE)
+                        .bind(ivCar);
                 // 获取 Adapter 中设置的 Tag
                 if (tag != null && tag instanceof Integer) { //解决问题：如何知道你点击的按钮是哪一个列表项中的，通过Tag的position
                     remove.setVisibility(View.VISIBLE);
                     connt.setVisibility(View.VISIBLE);
                     int pos = (Integer) tag;
                     //更改集合的数据
-                    int num = Double.valueOf(dataList.get(position).getCount()).intValue();
+                    int num = dataList.get(pos).getCount();
                     num++;
-                    dataList.get(position).setCount(num); //修改集合中商品数量
+                    dataList.get(pos).setCount(num); //修改集合中商品数量
                     //解决问题：点击某个按钮的时候，如果列表项所需的数据改变了，如何更新UI
                     stickyListAdapter.notifyDataSetChanged();
-                    intent = new Intent(getActivity(), CheckoutActivity.class);
-                    Data data = dataList.get(position);
-                    Integer beanCount = map.get(data);
-                    if (beanCount == null) {
-                        map.put(data, 1);
-                    } else {
-                        beanCount++;
-                        map.put(data, beanCount);
-                    }
-                    bind = BadgeFactory.create(getContext())
-                            .setTextColor(Color.WHITE)
-                            .setWidthAndHeight(25, 25)
-                            .setBadgeBackground(Color.RED)
-                            .setTextSize(10)
-                            .setBadgeGravity(Gravity.LEFT)
-                            .setBadgeCount(num)
-                            .setShape(BadgeView.SHAPE_CIRCLE)
-                            .bind(ivCar);
                 }
                 break;
             case R.id.iv_goods_remove: //点击减少数量按钮 ，执行相应的处理
+                allCount--;
+                bind = BadgeFactory.create(getContext())
+                        .setTextColor(Color.WHITE)
+                        .setWidthAndHeight(25, 25)
+                        .setBadgeBackground(Color.RED)
+                        .setTextSize(10)
+                        .setBadgeGravity(Gravity.LEFT)
+                        .setBadgeCount(allCount)
+                        .setShape(BadgeView.SHAPE_CIRCLE)
+                        .bind(ivCar);
                 // 获取 Adapter 中设置的 Tag
                 if (tag != null && tag instanceof Integer) {
                     int pos = (Integer) tag;
                     //更改集合的数据
-                    int num = Double.valueOf(dataList.get(position).getCount()).intValue();
+                    int num = dataList.get(pos).getCount();
                     if (num > 0) {
                         num--;
                         Set<Data> datas = map.keySet();
-                        dataList.get(position).setCount(num); //修改集合中商品数量
+                        dataList.get(pos).setCount(num); //修改集合中商品数量
                         stickyListAdapter.notifyDataSetChanged();
                         if (num <= 0) {
-
-                            num = 0;
-                            bind.setVisibility(View.INVISIBLE);
                             remove.setVisibility(View.GONE);
                             connt.setVisibility(View.GONE);
                         } else {
-                            for (Data data : datas){
-                                Integer integer = map.get(data);
+                            for (Data data1 : datas) {
+                                Integer integer = map.get(data1);
                                 integer--;
-                                map.put(data,integer);
+                                map.put(data1, integer);
                             }
                             connt.setText(num + "");
-                            bind.setBadgeCount(num);
                         }
                     }
-
                 }
         }
     }
