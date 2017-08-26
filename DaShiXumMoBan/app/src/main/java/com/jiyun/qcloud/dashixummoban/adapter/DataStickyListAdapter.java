@@ -32,7 +32,7 @@ public class DataStickyListAdapter extends BaseAdapter implements StickyListHead
 
     //第一步，设置接口，这里方便在外面的activity或者fragment进行回调
     private OnAddNum onAddNum;
-    //第二步，设置接口方法
+    //第二步，设置接口方法 
     public void setOnAddNum(OnAddNum onAddNum){
         this.onAddNum = onAddNum;
     }

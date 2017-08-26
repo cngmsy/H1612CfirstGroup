@@ -27,4 +27,6 @@ public class Urls {
     public static final String MORE="https://ticket-api-m.mtime.cn/discovery/trailerList.api";
 
     public static final String SHOPPINGCAR = "http://123.206.14.104:8080/TakeoutService/goods?sellerId=101";
+
+    public static final String ORDER="http://123.206.14.104:8080/TakeoutService/order?userId=3626";
 }
