@@ -46,6 +46,17 @@
 
         <activity android:name=".activity.ShoppingActivity" />
         <activity android:name=".activity.CheckoutActivity"></activity>
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="1fa51968109fd"/>
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="89ca627b6e85ef537015b94b5eab778c"/>
     </application>
 
 </manifest>
