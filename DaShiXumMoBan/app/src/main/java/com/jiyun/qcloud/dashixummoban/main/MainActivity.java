@@ -85,8 +85,13 @@ public class MainActivity extends BaseActivity {
                 FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
                 break;
             case R.id.but2:
+<<<<<<< HEAD
                 OrderFragment build = (OrderFragment) FragmentMager.getInstance().start(R.id.fragment, OrderFragment.class, false).build();
                 new OrderPresenter(build);
+=======
+                OrderFragment order = (OrderFragment) FragmentMager.getInstance().start(R.id.fragment, OrderFragment.class, false).build();
+                new OrderPresenter(order);
+>>>>>>> 94058744c75970f1a5716030c7e3d63093d8bc9b
                 break;
             case R.id.but4:
               FragmentMager.getInstance().start(R.id.fragment, PersonalFragment.class,false).build();

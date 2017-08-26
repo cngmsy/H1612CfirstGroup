@@ -128,6 +128,7 @@ public class RegistActivity extends BaseActivity {
                 if (null != psd && psd.length() == 4) {
                     cn.smssdk.SMSSDK.submitVerificationCode("86", str,eCode.getText().toString());
                     Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Toast.makeText(this, "密码长度不正确", Toast.LENGTH_SHORT).show();
                     Log.e("TAG","密码长度不正确");

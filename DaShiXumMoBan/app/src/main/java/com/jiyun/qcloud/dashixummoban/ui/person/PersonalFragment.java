@@ -95,7 +95,11 @@ public class PersonalFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(App.mBaseActivity,RegistActivity.class);
+<<<<<<< HEAD
 //                startActivity(intent);
+=======
+                startActivity(intent);
+>>>>>>> 94058744c75970f1a5716030c7e3d63093d8bc9b
             }
         });
         imagess.setOnClickListener(new View.OnClickListener() {
