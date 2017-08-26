@@ -16,6 +16,19 @@ public class Data implements Parcelable {
     private double newPrice;
     private int oldPrice;
     private int count;
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public static Creator<Data> getCREATOR() {
+        return CREATOR;
+    }
 
     public int getCount() {
         return count;
@@ -92,7 +105,6 @@ public class Data implements Parcelable {
         this.headIndex = headIndex;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -107,6 +119,7 @@ public class Data implements Parcelable {
         dest.writeDouble(this.newPrice);
         dest.writeInt(this.oldPrice);
         dest.writeInt(this.count);
+        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
         dest.writeInt(this.headId);
         dest.writeInt(this.headIndex);
     }
@@ -122,6 +135,7 @@ public class Data implements Parcelable {
         this.newPrice = in.readDouble();
         this.oldPrice = in.readInt();
         this.count = in.readInt();
+        this.isChecked = in.readByte() != 0;
         this.headId = in.readInt();
         this.headIndex = in.readInt();
     }

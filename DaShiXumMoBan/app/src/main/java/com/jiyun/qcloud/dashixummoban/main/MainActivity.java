@@ -13,9 +13,12 @@ import com.jiyun.qcloud.dashixummoban.app.App;
 import com.jiyun.qcloud.dashixummoban.base.BaseActivity;
 import com.jiyun.qcloud.dashixummoban.base.BaseFragment;
 import com.jiyun.qcloud.dashixummoban.manager.ActivityCollector;
+import com.jiyun.qcloud.dashixummoban.manager.BlankFragment;
 import com.jiyun.qcloud.dashixummoban.manager.FragmentMager;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomeFragment;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomePresenter;
+import com.jiyun.qcloud.dashixummoban.ui.more.MoreFragment;
+import com.jiyun.qcloud.dashixummoban.ui.more.MorePresent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,8 +79,13 @@ public class MainActivity extends BaseActivity {
             case R.id.but2:
                 break;
             case R.id.but4:
+
+                BaseFragment   fragment1 = FragmentMager.getInstance().start(R.id.fragment,BlankFragment.class, false).build();
+
                 break;
             case R.id.but5:
+                MoreFragment fragment = (MoreFragment) FragmentMager.getInstance().start(R.id.fragment, MoreFragment.class, false).build();
+                new MorePresent(fragment);
                 break;
             case R.id.linear:
                 break;

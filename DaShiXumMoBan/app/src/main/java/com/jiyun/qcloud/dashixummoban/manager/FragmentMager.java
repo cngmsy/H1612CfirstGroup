@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.jiyun.qcloud.dashixummoban.app.App;
 import com.jiyun.qcloud.dashixummoban.base.BaseFragment;
-import com.orhanobut.logger.Logger;
 
 /**
  * Created by chj on 2017/8/20.
@@ -94,7 +93,6 @@ public class FragmentMager {
             fragmentTransaction.hide(App.lastfragment);
         }
 
-        Logger.d("11111111");
         fragmentTransaction.show(fragment);
 
         return this;
@@ -132,9 +130,6 @@ public class FragmentMager {
 
         }
 
-
-
-        Logger.d("11111111");
         fragmentTransaction.show(fragment);
 
         return this;
@@ -165,7 +160,6 @@ public class FragmentMager {
         App.lastfragment = fragment;
         fragmentTransaction.commit();
         int count=fragmentManager.getBackStackEntryCount();
-        Logger.d("当前回退栈里面的Fragment对象为"+count);
         return fragment;
     }
 

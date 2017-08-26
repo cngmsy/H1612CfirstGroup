@@ -11,7 +11,6 @@ import com.jiyun.qcloud.dashixummoban.R;
 import com.jiyun.qcloud.dashixummoban.base.BaseFragment;
 import com.jiyun.qcloud.dashixummoban.entity.PandaHome;
 import com.jiyun.qcloud.dashixummoban.manager.FragmentMager;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +75,6 @@ public class HomePageFragment extends BaseFragment implements XRecyclerView.Load
 
     @Override
     public void showHomeListData(PandaHome pandaHome) {
-        Logger.d("在接口回调中返回结果"+pandaHome.getData().getArea().getTitle());
     }
 
     @Override

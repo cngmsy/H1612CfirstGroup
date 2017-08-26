@@ -7,8 +7,7 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.jiyun.qcloud.dashixummoban.manager.ActivityCollector;
-import com.orhanobut.logger.AndroidLogTool;
-import com.orhanobut.logger.Logger;
+
 
 /**
  * Created by chj on 2017/8/20.
@@ -71,16 +70,8 @@ public class BaseApplication extends MultiDexApplication {
                 }
             });
         }
-        initLogger();
     }
-    private void initLogger(){
-        Logger.init()                         // default PRETTYLOGGER or use just init()
-                .methodCount(3)                 // default 2
-//              .hideThreadInfo()               // default shown
-//              .logLevel(LogLevel.FULL)        // default LogLevel.FULL
-//              .methodOffset(2)                // default 0
-                .logTool(new AndroidLogTool()); // custom log tool, optional
-    }
+
     //当内存低时发送广播可以释放一些内存
     @Override
     public void onLowMemory() {

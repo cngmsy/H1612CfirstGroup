@@ -27,6 +27,10 @@ public class RegistActivity extends BaseActivity {
     Button regist;
     @BindView(R.id.land)
     Button land;
+<<<<<<< HEAD
+=======
+ //   EventHandler eventHandler;
+>>>>>>> 9fb2c3c2520c53f5525a3b1a2578c2dc897a6060
     private String str;
     private String psd;
     //private EventHandler eventHandler;
@@ -34,6 +38,10 @@ public class RegistActivity extends BaseActivity {
     @Override
     protected void initData() {
 //        eventHandler = new EventHandler() {
+<<<<<<< HEAD
+=======
+//            @Override
+>>>>>>> 9fb2c3c2520c53f5525a3b1a2578c2dc897a6060
 //            public void afterEvent(int event, int result, Object data) {
 //                Message message = myHandler.obtainMessage(0x00);
 //                message.arg1 = event;

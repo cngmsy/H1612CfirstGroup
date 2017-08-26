@@ -9,9 +9,7 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -41,20 +39,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import static android.R.attr.animation;
+import static android.R.attr.data;
+import static android.R.attr.tag;
+
 
 /**
  * Created by admin on 2017/8/22.
  */
 
-public class GoodsFragment extends BaseFragment implements GoodsContract.View,AdapterView.OnItemClickListener, Animator.AnimatorListener, AbsListView.OnScrollListener,XRecyclerView.LoadingListener {
+public class GoodsFragment extends BaseFragment implements GoodsContract.View, AdapterView.OnItemClickListener, Animator.AnimatorListener, AbsListView.OnScrollListener, XRecyclerView.LoadingListener, DataStickyListAdapter.OnAddNum {
     @BindView(R.id.lv_goods_left)
     ListView lvGoodsLeft;
     @BindView(R.id.shlv_goods_right)
@@ -71,9 +73,10 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
     private DataStickyListAdapter stickyListAdapter;
     private Intent intent;
     private Map<Data, Integer> map = new HashMap();
-    private int num = 0;
+    private int allCount = 0;
     private boolean isScroll = false;
     private BadgeView bind;
+    private int count;
 
     @Override
     protected int getLayoutRes() {
@@ -105,6 +108,8 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
         this.headList = headList;
         this.dataList = dataList;
 
+        Log.e("TAG", headList.size() + "adfsdfsdafs" + dataList.size());
+
         headListAdapter = new HeadListAdapter(App.mBaseActivity, headList);
         lvGoodsLeft.setAdapter(headListAdapter);
 
@@ -114,47 +119,8 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
         lvGoodsLeft.setOnItemClickListener(GoodsFragment.this);
         shlvGoodsRight.setOnScrollListener(GoodsFragment.this);
 
-        stickyListAdapter.setOnAddNum(listener);
-        stickyListAdapter.setOnSubNum(listener);
+        stickyListAdapter.setOnAddNum(this);
     }
-
-    /**
-     * 这里处理我们listview item里面的监听事件
-     */
-    protected View.OnClickListener listener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Object tag = v.getTag();
-            int key = v.getId();
-            switch (key) {
-                case R.id.iv_goods_add: //点击添加数量按钮，执行相应的处理
-                    // 获取 Adapter 中设置的 Tag
-                    if (tag != null && tag instanceof Integer) { //解决问题：如何知道你点击的按钮是哪一个列表项中的，通过Tag的position
-                        int position = (Integer) tag;
-                        //更改集合的数据
-                        int num = Double.valueOf(dataList.get(position).getCount()).intValue();
-                        num++;
-                        dataList.get(position).setCount(num); //修改集合中商品数量
-                        //解决问题：点击某个按钮的时候，如果列表项所需的数据改变了，如何更新UI
-                        stickyListAdapter.notifyDataSetChanged();
-                    }
-                    break;
-                case R.id.iv_goods_remove: //点击减少数量按钮 ，执行相应的处理
-                    // 获取 Adapter 中设置的 Tag
-                    if (tag != null && tag instanceof Integer) {
-                        int position = (Integer) tag;
-                        //更改集合的数据
-                        int num = Double.valueOf(dataList.get(position).getCount()).intValue();
-                        if (num > 0) {
-                            num--;
-                            dataList.get(position).setCount(num); //修改集合中商品数量
-                            stickyListAdapter.notifyDataSetChanged();
-                        }
-                    }
-                    break;
-            }
-        }
-    };
 
     @Override
     public void showProgress() {
@@ -183,7 +149,7 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
 
     @OnClick(R.id.iv_car)
     public void onClick() {
-        if (null != map && map.size() > 1) {
+        if (null != map && map.size() > 0) {
             ParcelableMap parcelableMap = new ParcelableMap();
             parcelableMap.setMap(map);
             intent.putExtra("map", parcelableMap);
@@ -193,105 +159,54 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
         }
     }
 
-//    @Override
-//    public void click(View v, int position, final ImageView remove, final TextView count) {
-//        intent = new Intent(getActivity(), CheckoutActivity.class);
-//        Data data1 = dataList.get(position);
-//        Integer beanCount = map.get(data1);
-//        if (beanCount == null) {
-//            map.put(data1, 1);
-//        } else {
-//            beanCount++;
-//            map.put(data1, beanCount);
-//        }
-//        for (int i = 0; i < headList.size(); i++) {
-//            String s = count.getText().toString();
-//            if (s.isEmpty()) {
-//                count.setText(1 + "");
-//            } else {
-//                int j = Integer.parseInt(s);
-//                j++;
-//                count.setText(j + "");
-//            }
-//        }
-//        num++;
-//        bind = BadgeFactory.create(getContext())
-//                .setTextColor(Color.WHITE)
-//                .setWidthAndHeight(25, 25)
-//                .setBadgeBackground(Color.RED)
-//                .setTextSize(10)
-//                .setBadgeGravity(Gravity.LEFT)
-//                .setBadgeCount(num)
-//                .setShape(BadgeView.SHAPE_CIRCLE)
-//                .bind(ivCar);
-//
-//        remove.setVisibility(View.VISIBLE);
-//        count.setVisibility(View.VISIBLE);
-//
-//        remove.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                num--;
-//                if (num <=  0) {
-//                    num = 0;
-//                    bind.setVisibility(View.INVISIBLE);
-//                    remove.setVisibility(View.GONE);
-//                    count.setVisibility(View.GONE);
-//                } else {
-//                    count.setText(num + "");
-//                    bind.setBadgeCount(num);
-//                }
-//            }
-//        });
-//
-//        int[] childCoordinate = new int[2];
-//        int[] parentCoordinate = new int[2];
-//        int[] shopCoordinate = new int[2];
-//        //1.分别获取被点击View、父布局、购物车在屏幕上的坐标xy。
-//        v.getLocationInWindow(childCoordinate);
-//        rlFather.getLocationInWindow(parentCoordinate);
-//        ivCar.getLocationInWindow(shopCoordinate);
-//
-//        //2.自定义ImageView 继承ImageView
-//        CarImageView img = new CarImageView(getContext());
-//        img.setImageResource(R.mipmap.apple);
-//        //3.设置img在父布局中的坐标位置
-//        img.setX(childCoordinate[0] - parentCoordinate[0]);
-//        img.setY(childCoordinate[1] - parentCoordinate[1]);
-//        //4.父布局添加该Img
-//        rlFather.addView(img);
-//
-//        //5.利用 二次贝塞尔曲线 需首先计算出 MoveImageView的2个数据点和一个控制点
-//        PointF startP = new PointF();
-//        PointF endP = new PointF();
-//        PointF controlP = new PointF();
-//        //开始的数据点坐标就是 addV的坐标
-//        startP.x = childCoordinate[0] - parentCoordinate[0];
-//        startP.y = childCoordinate[1] - parentCoordinate[1];
-//        //结束的数据点坐标就是 shopImg的坐标
-//        endP.x = shopCoordinate[0] - parentCoordinate[0];
-//        endP.y = shopCoordinate[1] - parentCoordinate[1];
-//        //控制点坐标 x等于 购物车x；y等于 addV的y
-//        controlP.x = endP.x;
-//        controlP.y = startP.y;
-//
-//        //启动属性动画
-//        ObjectAnimator animator = ObjectAnimator.ofObject(img, "mPointF",
-//                new PointFTypeEvaluator(controlP), startP, endP);
-//        animator.setDuration(1000);
-//        animator.addListener(this);
-//        animator.start();
-//    }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//左边条目被点击了
+        //左边条目被点击了
         headListAdapter.setSelectedPosition(i);
         //通过添加数据时右侧添加的
         Head head = headList.get(i);
         shlvGoodsRight.setSelection(head.getGroupFirstIndex());
         isScroll = false;
+    }
+
+    public void setBeiSai(View v) {
+        int[] childCoordinate = new int[2];
+        int[] parentCoordinate = new int[2];
+        int[] shopCoordinate = new int[2];
+        //1.分别获取被点击View、父布局、购物车在屏幕上的坐标xy。
+        v.getLocationInWindow(childCoordinate);
+        rlFather.getLocationInWindow(parentCoordinate);
+        ivCar.getLocationInWindow(shopCoordinate);
+
+        //2.自定义ImageView 继承ImageView
+        CarImageView img = new CarImageView(getContext());
+        img.setImageResource(R.mipmap.apple);
+        //3.设置img在父布局中的坐标位置
+        img.setX(childCoordinate[0] - parentCoordinate[0]);
+        img.setY(childCoordinate[1] - parentCoordinate[1]);
+        //4.父布局添加该Img
+        rlFather.addView(img);
+
+        //5.利用 二次贝塞尔曲线 需首先计算出 MoveImageView的2个数据点和一个控制点
+        PointF startP = new PointF();
+        PointF endP = new PointF();
+        PointF controlP = new PointF();
+        //开始的数据点坐标就是 addV的坐标
+        startP.x = childCoordinate[0] - parentCoordinate[0];
+        startP.y = childCoordinate[1] - parentCoordinate[1];
+        //结束的数据点坐标就是 shopImg的坐标
+        endP.x = shopCoordinate[0] - parentCoordinate[0];
+        endP.y = shopCoordinate[1] - parentCoordinate[1];
+        //控制点坐标 x等于 购物车x；y等于 addV的y
+        controlP.x = endP.x;
+        controlP.y = startP.y;
+
+        //启动属性动画
+        ObjectAnimator animator = ObjectAnimator.ofObject(img, "mPointF",
+                new PointFTypeEvaluator(controlP), startP, endP);
+        animator.setDuration(1000);
+        animator.addListener(this);
+        animator.start();
     }
 
     @Override
@@ -327,7 +242,7 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
 
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-//左边点击  导致右边滚动 只触发这个方法
+        //左边点击  导致右边滚动 只触发这个方法
         if (isScroll) {
             Data data = dataList.get(i);
             //当前正在置顶显示的头
@@ -351,6 +266,83 @@ public class GoodsFragment extends BaseFragment implements GoodsContract.View,Ad
     @Override
     public void onLoadMore() {
 
+    }
+
+    @Override
+    public void click(View v, int position, ImageView remove, TextView connt) {
+
+        Object tag = v.getTag();
+        int key = v.getId();
+        switch (key) {
+            case R.id.iv_goods_add: //点击添加数量按钮，执行相应的处理
+                setBeiSai(v);
+                allCount++;
+                intent = new Intent(getActivity(), CheckoutActivity.class);
+                Data data = dataList.get(position);
+                Integer beanCount = map.get(data);
+                if (beanCount == null) {
+                    map.put(data, 1);
+                } else {
+                    beanCount++;
+                    map.put(data, beanCount);
+                }
+                bind = BadgeFactory.create(getContext())
+                        .setTextColor(Color.WHITE)
+                        .setWidthAndHeight(25, 25)
+                        .setBadgeBackground(Color.RED)
+                        .setTextSize(10)
+                        .setBadgeGravity(Gravity.LEFT)
+                        .setBadgeCount(allCount)
+                        .setShape(BadgeView.SHAPE_CIRCLE)
+                        .bind(ivCar);
+                // 获取 Adapter 中设置的 Tag
+                if (tag != null && tag instanceof Integer) { //解决问题：如何知道你点击的按钮是哪一个列表项中的，通过Tag的position
+                    remove.setVisibility(View.VISIBLE);
+                    connt.setVisibility(View.VISIBLE);
+                    int pos = (Integer) tag;
+                    //更改集合的数据
+                    int num = dataList.get(pos).getCount();
+                    num++;
+                    dataList.get(pos).setCount(num); //修改集合中商品数量
+                    //解决问题：点击某个按钮的时候，如果列表项所需的数据改变了，如何更新UI
+                    stickyListAdapter.notifyDataSetChanged();
+                }
+                break;
+            case R.id.iv_goods_remove: //点击减少数量按钮 ，执行相应的处理
+                allCount--;
+                bind = BadgeFactory.create(getContext())
+                        .setTextColor(Color.WHITE)
+                        .setWidthAndHeight(25, 25)
+                        .setBadgeBackground(Color.RED)
+                        .setTextSize(10)
+                        .setBadgeGravity(Gravity.LEFT)
+                        .setBadgeCount(allCount)
+                        .setShape(BadgeView.SHAPE_CIRCLE)
+                        .bind(ivCar);
+                // 获取 Adapter 中设置的 Tag
+                if (tag != null && tag instanceof Integer) {
+                    int pos = (Integer) tag;
+                    //更改集合的数据
+                    int num = dataList.get(pos).getCount();
+                    if (num > 0) {
+                        num--;
+                        Set<Data> datas = map.keySet();
+                        dataList.get(pos).setCount(num); //修改集合中商品数量
+                        stickyListAdapter.notifyDataSetChanged();
+                        if (num <= 0) {
+                            remove.setVisibility(View.GONE);
+                            connt.setVisibility(View.GONE);
+                        } else {
+                            for (Data data1 : datas) {
+                                Integer integer = map.get(data1);
+                                integer--;
+                                map.put(data1, integer);
+                            }
+                            connt.setText(num + "");
+                        }
+                    }
+                }
+        }
     }
 
     public class PointFTypeEvaluator implements TypeEvaluator<PointF> {

@@ -79,6 +79,7 @@ public class GoodsPersenter implements GoodsContract.Persenter {
                         dataList.add(dataEntity);
                     }
                 }
+                Log.e("TAG",headList.size()+"adfsdfsdafs"+dataList.size());
                 goodView.getList(headList,dataList);
                 goodView.dimissProgress();
             }
