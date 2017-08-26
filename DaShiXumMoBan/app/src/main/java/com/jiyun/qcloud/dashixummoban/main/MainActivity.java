@@ -18,6 +18,8 @@ import com.jiyun.qcloud.dashixummoban.ui.home1.HomeFragment;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomePresenter;
 import com.jiyun.qcloud.dashixummoban.ui.more.MoreFragment;
 import com.jiyun.qcloud.dashixummoban.ui.more.MorePresent;
+import com.jiyun.qcloud.dashixummoban.ui.order.OrderFragment;
+import com.jiyun.qcloud.dashixummoban.ui.order.OrderPresenter;
 import com.jiyun.qcloud.dashixummoban.ui.person.PersonalFragment;
 
 import butterknife.BindView;
@@ -77,9 +79,10 @@ public class MainActivity extends BaseActivity {
                 FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
                 break;
             case R.id.but2:
+                OrderFragment order = (OrderFragment) FragmentMager.getInstance().start(R.id.fragment, OrderFragment.class, false).build();
+                new OrderPresenter(order);
                 break;
             case R.id.but4:
-
               FragmentMager.getInstance().start(R.id.fragment, PersonalFragment.class,false).build();
                 break;
             case R.id.but5:
