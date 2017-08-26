@@ -11,6 +11,6 @@ import com.jiyun.qcloud.dashixummoban.modle.net.callback.NetWorkCallBack;
 public class IOrderModelImpl implements IHomeModel {
     @Override
     public void loadHomeList(NetWorkCallBack<BaseBean> callback) {
-        iHttp.get(Urls.ORDER,null,callback);
+        iHttp.get(Urls.,null,callback);
     }
 }
