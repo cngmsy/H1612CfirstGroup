@@ -1,6 +1,4 @@
-# Created by .ignore support plugin (hsz.mobi
-
-)
+# Created by .ignore support plugin (hsz.mobi)
 ### Android template
 # Built application files
 *.apk
@@ -54,7 +52,6 @@ captures/
 *.ear
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-
 hs_err_pid*
 ### Eclipse template
 
@@ -128,4 +125,3 @@ mvp.jks
 app/src/androidTest/
 app/src/test/
 app/src/testDebug/
-
