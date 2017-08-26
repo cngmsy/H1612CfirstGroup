@@ -35,26 +35,22 @@ public class RegistActivity extends BaseActivity {
     Button regist;
     @BindView(R.id.land)
     Button land;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
  //   EventHandler eventHandler;
->>>>>>> 9fb2c3c2520c53f5525a3b1a2578c2dc897a6060
-=======
+
     EventHandler eventHandler;
->>>>>>> 7de4a4e02b1f00ef936d8e3bcbe7ee7c9bde747a
+
     private String str;
     private String psd;
     //private EventHandler eventHandler;
 
     @Override
     protected void initData() {
-<<<<<<< HEAD
+
 //        eventHandler = new EventHandler() {
-<<<<<<< HEAD
-=======
+
 //            @Override
->>>>>>> 9fb2c3c2520c53f5525a3b1a2578c2dc897a6060
+
 //            public void afterEvent(int event, int result, Object data) {
 //                Message message = myHandler.obtainMessage(0x00);
 //                message.arg1 = event;
@@ -65,7 +61,7 @@ public class RegistActivity extends BaseActivity {
 //        };
 //
 //        cn.smssdk.SMSSDK.registerEventHandler(eventHandler);
-=======
+
         eventHandler = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
@@ -78,7 +74,6 @@ public class RegistActivity extends BaseActivity {
         };
 
         cn.smssdk.SMSSDK.registerEventHandler(eventHandler);
->>>>>>> 7de4a4e02b1f00ef936d8e3bcbe7ee7c9bde747a
     }
 
     @Override
