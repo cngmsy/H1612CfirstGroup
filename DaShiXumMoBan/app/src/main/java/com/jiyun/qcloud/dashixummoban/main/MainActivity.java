@@ -18,10 +18,13 @@ import com.jiyun.qcloud.dashixummoban.ui.home1.HomeFragment;
 import com.jiyun.qcloud.dashixummoban.ui.home1.HomePresenter;
 import com.jiyun.qcloud.dashixummoban.ui.more.MoreFragment;
 import com.jiyun.qcloud.dashixummoban.ui.more.MorePresent;
+import com.jiyun.qcloud.dashixummoban.ui.order.OrderFragment;
+import com.jiyun.qcloud.dashixummoban.ui.order.OrderPresenter;
 import com.jiyun.qcloud.dashixummoban.ui.person.PersonalFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import util.UpdateAppUtils;
 
 /**
  * Created by chj on 2017/8/20.
@@ -47,6 +50,11 @@ public class MainActivity extends BaseActivity {
     private String address;
     @Override
     protected void initData() {
+        UpdateAppUtils.from(this)
+                .serverVersionCode(2)
+                .serverVersionName("2.0")
+                .apkPath("http://123.206.14.104:8080/FileUploadDemo/files/kk.apk")
+                .update();
         address = getIntent().getStringExtra("address");
         fragmentManager = App.mBaseActivity.getSupportFragmentManager();
         HomeFragment homeFragment = (HomeFragment) FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
@@ -77,9 +85,10 @@ public class MainActivity extends BaseActivity {
                 FragmentMager.getInstance().start(R.id.fragment, HomeFragment.class, false).build();
                 break;
             case R.id.but2:
+                OrderFragment build = (OrderFragment) FragmentMager.getInstance().start(R.id.fragment, OrderFragment.class, false).build();
+                new OrderPresenter(build);
                 break;
             case R.id.but4:
-
               FragmentMager.getInstance().start(R.id.fragment, PersonalFragment.class,false).build();
                 break;
             case R.id.but5:

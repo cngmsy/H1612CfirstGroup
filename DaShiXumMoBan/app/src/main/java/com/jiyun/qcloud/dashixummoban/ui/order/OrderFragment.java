@@ -27,7 +27,7 @@ import butterknife.BindView;
  * Created by 82年的笔记本 on 2017/8/22.
  */
 
-public class OrderFragment extends BaseFragment implements XRecyclerView.LoadingListener, OrderContract.View {
+public class OrderFragment extends BaseFragment implements XRecyclerView.LoadingListener,OrderContract.View {
     @BindView(R.id.listview)
     ListView listview;
     List<Order.GoodsInfosBean> list = new ArrayList<>();
